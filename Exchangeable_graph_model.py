@@ -90,4 +90,7 @@ def learning_example(F_a=1, F_b=1, G_a=3, G_b=1.2):
 
     plt.show()
 
-learning_example()
+#-------------------------------------------------------------------------
+
+if __name__ == '__main__':
+    learning_example()
