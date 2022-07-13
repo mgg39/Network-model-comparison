@@ -1,0 +1,4 @@
+- [Paper] A Survey of Statistical Network Models - see repo upload
+- [Software documentation] NetworkX - https://networkx.org/documentation/networkx-1.10/reference/generators.html
+- [Webpage] Exchangeability and Bayesian Updating - https://colab.research.google.com/github/QuantEcon/lecture-python.notebooks/blob/master/exchangeable.ipynb#scrollTo=223b3c32
+- [Video] Building a toy social network with Python, Part 1: The database - https://www.youtube.com/watch?v=xYh0dbvGHc8
