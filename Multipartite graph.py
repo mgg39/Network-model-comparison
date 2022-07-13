@@ -1,3 +1,5 @@
+#Complete multipartite graph with the specified block sizes
+
 import networkx as nx #networkx lib
 import matplotlib.pyplot as plt
 from Model_variables import bl_sz

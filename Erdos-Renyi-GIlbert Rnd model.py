@@ -1,3 +1,5 @@
+#G(n,p) random graph / Erdős-Rényi graph / binomial graph
+
 import networkx as nx #networkx lib
 import matplotlib.pyplot as plt
 from Model_variables import N, p
