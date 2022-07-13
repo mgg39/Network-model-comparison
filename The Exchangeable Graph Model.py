@@ -1,5 +1,4 @@
 #The Exchangeable Graph Model ~ input parameters yet to be consistent with project standardization
-#source: https://colab.research.google.com/github/QuantEcon/lecture-python.notebooks/blob/master/exchangeable.ipynb#scrollTo=223b3c32
 
 import matplotlib.pyplot as plt
 plt.rcParams["figure.figsize"] = (11, 5)  #set default figure size
