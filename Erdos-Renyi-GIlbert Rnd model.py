@@ -1,7 +1,8 @@
 import networkx as nx #networkx lib
 import matplotlib.pyplot as plt
+from Model_variables import N, p
   
-I= nx.erdos_renyi_graph(10,0) #N=10, p =0
+I= nx.erdos_renyi_graph(N,p) 
 nx.draw(I, with_labels=True)
 plt.show()
 
