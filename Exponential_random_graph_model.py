@@ -1,7 +1,10 @@
-#The Exponential Graph Model 
+#The Exponential Graph Model - not ubuntu friendly, to rev
 
 import scipy as sp
-from scipy.misc import comb
+try:  # SciPy >= 0.19
+    from scipy.special import comb, logsumexp
+except ImportError:
+    from scipy.misc import comb, logsumexp  # noqa 
 from itertools import product
 from pymc import  Normal, Bernoulli, InvLogit, MCMC,deterministic
 
