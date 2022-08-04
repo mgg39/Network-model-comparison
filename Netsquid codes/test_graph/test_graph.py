@@ -2,7 +2,7 @@ import netsquid as ns
 from netsquid.components import QuantumChannel
 from netsquid.nodes import Node, Network
 
-from Connections import ClassicalConnection, EntanglingConnection, create_processor
+from test_connections import ClassicalConnection, EntanglingConnection, create_processor
 
 
 def network_setup_with_ent_source(node_distance=4e-3, depolar_rate=0, dephase_rate=0):
