@@ -5,7 +5,6 @@ from netsquid.nodes import Node, Network
 from Connections import ClassicalConnection, EntanglingConnection, create_processor
 
 
-# Network set up
 def network_setup_with_ent_source(node_distance=4e-3, depolar_rate=0, dephase_rate=0):
     network = Network("Three Node Network with Ent Sources")
 
@@ -15,16 +14,14 @@ def network_setup_with_ent_source(node_distance=4e-3, depolar_rate=0, dephase_ra
         node.number = i
         nodes.append(node)
 
-    # Add the nodes to the network
     network.add_nodes(nodes)
 
-    # Make the network completely connected (all with two-way classical communication)
     for i in range(NUM_NODES):
         j = i + 1
         while j < NUM_NODES:
             c_conn = ClassicalConnection(name=f'c_conn_{i}{j}',
                                          length=node_distance)
-            # Two-way classical connection
+
             network.add_connection(nodes[i],
                                    nodes[j],
                                    label=f'c_conn_{i}{j}',
@@ -36,16 +33,10 @@ def network_setup_with_ent_source(node_distance=4e-3, depolar_rate=0, dephase_ra
                                           length=node_distance,
                                           source_frequency=source_frequency)
 
-            # An entanglement generating channel (with a midpoint source)
             port_1, port_2 = network.add_connection(
                 nodes[i], nodes[j], connection=q_conn, label=f"quan_%s%s" % (i, j),
                 port_name_node1=f"qin_ent_source_{i}{j}", port_name_node2=f"qin_ent_source_{i}{j}")
 
-            # Each node has NUM_NODES + 1 memory slots. Here we map the incoming
-            # qubits for the specific channel to a specific memory location.
-            # E.g. for the pair node_0 and node_1, at node_0, qubits entangled with
-            # node_1 go to memory location 1, and those at node_1 with node_0 go to
-            # memory location 0.
             nodes[i].ports[port_1].forward_input(nodes[i].qmemory.ports[f'qin{j}'])
             nodes[j].ports[port_2].forward_input(nodes[j].qmemory.ports[f'qin{i}'])
             j += 1
