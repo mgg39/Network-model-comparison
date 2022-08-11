@@ -2,6 +2,8 @@ from netsquid.protocols import Protocol
 from netsquid.components import QuantumChannel
 from netsquid.nodes import Node, DirectConnection
 from netsquid.qubits import qubitapi as qapi
+from netsquid.protocols import NodeProtocol
+
 
 class Forward_message(NodeProtocol):
 

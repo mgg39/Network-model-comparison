@@ -1,6 +1,6 @@
 #Netsquid imports
 import netsquid as ns
-from netsquid.protocols import Signals
+#from netsquid.protocols import Signals
 from netsquid.util import DataCollector
 from netsquid.qubits.qubitapi import *
 from netsquid.qubits.qformalism import *
