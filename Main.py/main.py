@@ -1,3 +1,5 @@
+print("I am running")
+
 #Netsquid imports
 import netsquid as ns
 #from netsquid.protocols import Signals
@@ -16,7 +18,7 @@ from initialize import Generate_message
 #import data collection system
 from datacollector import setup_datacollector
 
-def run_experiment(): #(num_qubits):
+def run_experiment(num_qubits):
 
     ## Initialize network ------------------------------------------
     network = Two_node_network(3,1,1)
@@ -26,7 +28,7 @@ def run_experiment(): #(num_qubits):
     for node in network.nodes:
         protocols.append(Forward_message(network.nodes[node]))
     
-    #protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
+    protocols.append(Generate_message(network.nodes[node],num_qubits))#'node_0'], num_qubits))
 
     ## Data collector ------------------------------------------
     #data = setup_datacollector(network,Forward_message)
@@ -39,6 +41,6 @@ def run_experiment(): #(num_qubits):
 
 #Run
 if __name__ == '__main__':
-    run_experiment() #100)
+    run_experiment(1)
         
-print("I am running")
+print("I am running 2")
