@@ -21,13 +21,26 @@ from initialize import Generate_message
 
 def Run_experiment(num_qubits):
 
-    #Initialize network
+    ## Initialize network ------------------------------------------
     network = Two_node_network()
     protocols = []
     measure_protocols = []
     measure_node_nums = []
 
+    ## Protocols ------------------------------------------
     for node in network.nodes:
         protocols.append(Forward_message(network.nodes[node]))
     
     protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
+
+    ## Simulation ------------------------------------------
+    
+    # Start the simulation
+    ns.sim_run()
+
+################################################### Run ######################################################################################
+if __name__ == '__main__':
+    # run the experiment x times
+    for i in range(1):
+        #n layers considers 1st node to be in layer 0
+        Run_experiment(num_qubits=100)
