@@ -4,6 +4,7 @@ import numpy as np
 #netsquid imports
 import netsquid as ns
 import netsquid.components.instructions as instr #instructions that can be followed by the processor
+from netsquid.components.instructions import InstructionError,INSTR_INIT, INSTR_SWAP, INSTR_UNITARY, INSTR_X, INSTR_Y, INSTR_S, INSTR_T, INSTR_Z, INSTR_H, INSTR_I  
 import netsquid.qubits.ketstates as ks #qubit state format - can be modif
 from netsquid.components import ClassicalChannel #input standart classical channel class 
 from netsquid.components import QuantumChannel, SourceStatus, QSource, PhysicalInstruction, \
@@ -14,6 +15,7 @@ from netsquid.qubits import StateSampler
 from netsquid.qubits.qubitapi import *
 from netsquid.qubits.qformalism import *
 from netsquid.nodes import Node, Network 
+from netsquid.examples.repeater_chain import FibreDepolarizeModel
 
 #import from connections
 from connections import EntanglingConnection #Quantum channel

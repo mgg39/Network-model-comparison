@@ -1,13 +1,16 @@
 import netsquid as ns
 import netsquid.qubits.ketstates as ks #qubit state format - can be modif
 from netsquid.components import ClassicalChannel #input standart classical channel class 
-from netsquid.components import QuantumChannel, FixedDelayModel
-from netsquid.components.models import FibreDelayModel #chosen connection model for classical connections - can be modif
+from netsquid.components import QuantumChannel
+from netsquid.components import QSource
+from netsquid.components.qsource import SourceStatus
+from netsquid.components.models import FibreDelayModel, DephaseNoiseModel, FixedDelayModel #chosen connection model for classical connections - can be modif
 from netsquid.nodes.connections import Connection
 from netsquid.qubits.qubitapi import *
 from netsquid.qubits.qformalism import *
+from netsquid.qubits import StateSampler
 from netsquid.nodes import Node, Network 
-
+#online hub: 03002003600
 #Quantum connection
 class EntanglingConnection(Connection):
     """A connection that generates entanglement.

@@ -1,6 +1,7 @@
 #netsquid imports
 import netsquid as ns
 import netsquid.components.instructions as instr #instructions that can be followed by the processor
+from netsquid.components.instructions import InstructionError,INSTR_INIT, INSTR_SWAP, INSTR_UNITARY, INSTR_X, INSTR_Y, INSTR_S, INSTR_T, INSTR_Z, INSTR_H, INSTR_I, INSTR_MEASURE_BELL 
 import netsquid.qubits.ketstates as ks #qubit state format - can be modif
 from netsquid.components import QuantumChannel, SourceStatus, QSource, PhysicalInstruction, \
     DepolarNoiseModel, QuantumProcessor, DephaseNoiseModel, FixedDelayModel
