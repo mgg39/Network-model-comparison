@@ -29,8 +29,8 @@ def run_experiment(): #(num_qubits):
     #protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
 
     ## Data collector ------------------------------------------
-    data = setup_datacollector(network,protocols)
-    print(data)
+    #data = setup_datacollector(network,Forward_message)
+    #print(data)
 
     ## Simulation ------------------------------------------
     
