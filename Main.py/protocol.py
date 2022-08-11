@@ -13,4 +13,3 @@ class Forward_message(NodeProtocol):
         #Send qubit to available connected node
         port = self.node.ports["port_to_channel"]
         port.tx_output(qubit)
-
