@@ -1,3 +1,6 @@
+#numpy
+import numpy as np
+
 #netsquid imports
 import netsquid as ns
 import netsquid.components.instructions as instr #instructions that can be followed by the processor
@@ -15,6 +18,7 @@ from netsquid.nodes import Node, Network
 #import from connections
 from connections import EntanglingConnection #Quantum channel
 from connections import ClassicalConnection #Classical channel
+from qprocessor import create_qprocessor #Processor
 
 
 def Two_node_network(num_nodes, node_distance, source_frequency):

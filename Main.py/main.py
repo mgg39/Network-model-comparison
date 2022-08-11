@@ -22,7 +22,7 @@ from initialize import Generate_message
 def Run_experiment(num_qubits):
 
     ## Initialize network ------------------------------------------
-    network = Two_node_network(3)
+    network = Two_node_network(3,1,1)
     protocols = []
     measure_protocols = []
     measure_node_nums = []
