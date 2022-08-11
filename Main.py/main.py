@@ -10,8 +10,11 @@ from netsquid.protocols import NodeProtocol
 
 #import topology 
 from network import Two_node_network
-#import protocol 
+#import forwarding protocol 
 from protocol import Forward_message
+#import generating qubits initial protocol
+from initialize import Generate_message
+
 
 #Common warning
 #np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
@@ -24,4 +27,7 @@ def Run_experiment(num_qubits):
     measure_protocols = []
     measure_node_nums = []
 
+    for node in network.nodes:
+        protocols.append(Forward_message(network.nodes[node]))
     
+    protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
