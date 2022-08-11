@@ -40,34 +40,4 @@ if __name__ == '__main__':
     for i in range(1):
         #n layers considers 1st node to be in layer 0
         Run_experiment(num_qubits=100)
-'''
-##----------------------------------------------------------------
-
-def run_simulation(num_nodes=4, node_distance=20, num_iters=100):
-    """Run the simulation experiment and return the collected data.
-
-    Parameters
-    ----------
-    num_nodes : int, optional
-        Number nodes in the repeater chain network. At least 3. Default 4.
-    node_distance : float, optional
-        Distance between nodes, larger than 0. Default 20 [km].
-    num_iters : int, optional
-        Number of simulation runs. Default 100.
-
-    Returns
-    -------
-    :class:`pandas.DataFrame`
-        Dataframe with recorded fidelity data.
-
-    """
-    ns.sim_reset()
-    est_runtime = (0.5 + num_nodes - 1) * node_distance * 5e3
-    network = setup_network(num_nodes, node_distance=node_distance,
-                            source_frequency=1e9 / est_runtime)
-    protocol = setup_repeater_protocol(network)
-    dc = setup_datacollector(network, protocol)
-    protocol.start()
-    ns.sim_run(est_runtime * num_iters)
-    return dc.dataframe
-'''
+        
