@@ -38,7 +38,7 @@ def Run_experiment(num_qubits):
     # Start the simulation
     ns.sim_run()
 
-################################################### Run ######################################################################################
+#Run
 if __name__ == '__main__':
     # run the experiment x times
     for i in range(1):
