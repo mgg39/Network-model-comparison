@@ -16,13 +16,11 @@ from initialize import Generate_message
 #import data collection system
 from datacollector import setup_datacollector
 
-def Run_experiment(num_qubits):
+def run_experiment(): #(num_qubits):
 
     ## Initialize network ------------------------------------------
     network = Two_node_network(3,1,1)
     protocols = []
-    measure_protocols = []
-    measure_node_nums = []
 
     ## Protocols ------------------------------------------
     for node in network.nodes:
@@ -30,9 +28,9 @@ def Run_experiment(num_qubits):
     
     #protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
 
-    ## Data collector
+    ## Data collector ------------------------------------------
     data = setup_datacollector(network,protocols)
-    return data
+    print(data)
 
     ## Simulation ------------------------------------------
     
@@ -41,8 +39,6 @@ def Run_experiment(num_qubits):
 
 #Run
 if __name__ == '__main__':
-    # run the experiment x times
-    for i in range(1):
-        #n layers considers 1st node to be in layer 0
-        Run_experiment(num_qubits=100)
+    run_experiment() #100)
         
+print("I am running")

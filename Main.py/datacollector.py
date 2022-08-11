@@ -6,7 +6,7 @@ from netsquid.qubits.qubitapi import *
 from netsquid.qubits.qformalism import *
 from netsquid.nodes import Node, Network 
 from netsquid.protocols import NodeProtocol
-
+import pydynaa
 
 def setup_datacollector(network, protocol):
     """Setup the datacollector to calculate the fidelity
