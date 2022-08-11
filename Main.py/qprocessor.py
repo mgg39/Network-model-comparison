@@ -1,3 +1,13 @@
+#netsquid imports
+import netsquid as ns
+import netsquid.components.instructions as instr #instructions that can be followed by the processor
+import netsquid.qubits.ketstates as ks #qubit state format - can be modif
+from netsquid.components import QuantumChannel, SourceStatus, QSource, PhysicalInstruction, \
+    DepolarNoiseModel, QuantumProcessor, DephaseNoiseModel, FixedDelayModel
+from netsquid.qubits.qubitapi import *
+from netsquid.qubits.qformalism import *
+
+
 def create_qprocessor(name):
     """Factory to create a quantum processor for each node in the repeater chain network.
 
