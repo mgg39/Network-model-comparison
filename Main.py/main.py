@@ -13,7 +13,8 @@ from network import Two_node_network
 from protocol import Forward_message
 #import generating qubits initial protocol
 from initialize import Generate_message
-
+#import data collection system
+from datacollector import setup_datacollector
 
 def Run_experiment(num_qubits):
 
@@ -27,7 +28,11 @@ def Run_experiment(num_qubits):
     for node in network.nodes:
         protocols.append(Forward_message(network.nodes[node]))
     
-    protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
+    #protocols.append(Generate_message(network.nodes['node_0'], num_qubits))
+
+    ## Data collector
+    data = setup_datacollector(network,protocols)
+    return data
 
     ## Simulation ------------------------------------------
     

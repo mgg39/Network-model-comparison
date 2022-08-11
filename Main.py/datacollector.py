@@ -1,3 +1,13 @@
+#Netsquid imports
+import netsquid as ns
+#from netsquid.protocols import Signals
+from netsquid.util import DataCollector
+from netsquid.qubits.qubitapi import *
+from netsquid.qubits.qformalism import *
+from netsquid.nodes import Node, Network 
+from netsquid.protocols import NodeProtocol
+
+
 def setup_datacollector(network, protocol):
     """Setup the datacollector to calculate the fidelity
     when the CorrectionProtocol has finished.
@@ -28,4 +38,5 @@ def setup_datacollector(network, protocol):
     dc = DataCollector(calc_fidelity, include_entity_name=False)
     dc.collect_on(pydynaa.EventExpression(source=protocol.subprotocols['CorrectProtocol'],
                                           event_type=Signals.SUCCESS.value))
+    print("I am working")
     return dc
