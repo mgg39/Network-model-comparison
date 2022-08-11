@@ -44,7 +44,7 @@ if __name__ == '__main__':
     for i in range(1):
         #n layers considers 1st node to be in layer 0
         Run_experiment(num_qubits=100)
-
+'''
 ##----------------------------------------------------------------
 
 def run_simulation(num_nodes=4, node_distance=20, num_iters=100):
@@ -74,3 +74,4 @@ def run_simulation(num_nodes=4, node_distance=20, num_iters=100):
     protocol.start()
     ns.sim_run(est_runtime * num_iters)
     return dc.dataframe
+'''
