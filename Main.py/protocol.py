@@ -1,3 +1,4 @@
+import netsquid as ns
 from netsquid.protocols import Protocol
 from netsquid.components import QuantumChannel
 from netsquid.nodes import Node, DirectConnection

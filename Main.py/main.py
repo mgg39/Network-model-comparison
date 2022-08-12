@@ -29,12 +29,16 @@ def run_experiment(num_qubits):
     ## Protocols ------------------------------------------
     for node in network.nodes:
         f = Forward_message(network.nodes[node])
+        protocols.append(f)
         measure_node_nums.append(f)
 
         m = Measure_Qubit(network.nodes[node])
         protocols.append(m)
         measure_protocols.append(m)    
-        protocols.append(Generate_message(network.nodes[node],num_qubits))#'node_0'], num_qubits))
+    
+    g = Generate_message(network.nodes[node],num_qubits)
+    protocols.append(g) 
+    protocols.append(f)
     
 
     ## Data collector ------------------------------------------
