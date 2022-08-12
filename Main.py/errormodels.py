@@ -36,4 +36,4 @@ class FibreDepolarizeModel(QuantumErrorModel):
         """
         for qubit in qubits:
             prob = 1 - (1 - self.properties['p_depol_init']) * np.power(
-                10, - kwargs['length']**2 * self.prope
+                10, - kwargs['length']**2 * self.prope)

@@ -7,7 +7,7 @@ from netsquid.qubits.qformalism import *
 from netsquid.nodes import Node, Network 
 from netsquid.protocols import NodeProtocol
 import pydynaa
-
+'''
 def setup_datacollector(network, protocol):
     """Setup the datacollector to calculate the fidelity
     when the CorrectionProtocol has finished.
@@ -40,3 +40,4 @@ def setup_datacollector(network, protocol):
                                           event_type=Signals.SUCCESS.value))
     print("I am working")
     return dc
+'''

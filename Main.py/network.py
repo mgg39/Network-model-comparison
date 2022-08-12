@@ -42,7 +42,7 @@ def Two_node_network(num_nodes, node_distance, source_frequency):
         Network component with all nodes and connections as subcomponents.
 
     """
-    print("I am being called")
+
     if num_nodes < 3:
         raise ValueError(f"Can't create repeater chain with {num_nodes} nodes.")
     network = Network("Repeater_chain_network")
