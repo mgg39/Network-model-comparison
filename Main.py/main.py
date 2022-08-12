@@ -1,4 +1,3 @@
-print("I am running")
 
 #Netsquid imports
 import netsquid as ns
@@ -21,7 +20,7 @@ from datacollector import setup_datacollector
 def run_experiment(num_qubits):
 
     ## Initialize network ------------------------------------------
-    network = Two_node_network(3,1,1)
+    network = Two_node_network(2,1,1)
     protocols = []
 
     ## Protocols ------------------------------------------
@@ -43,4 +42,4 @@ def run_experiment(num_qubits):
 if __name__ == '__main__':
     run_experiment(1)
         
-print("I am running 2")
+print("I have ran")
