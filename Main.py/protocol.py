@@ -14,5 +14,7 @@ class Forward_message(NodeProtocol):
         #Output time stamps
         print(f"Sending qubit at t={ns.sim_time()}")
         #Send qubit to available connected node
-        port = self.node.ports["port_to_channel"]
+        port = self.node.ports["port_name"]
         port.tx_output(qubit)
+
+        print("Forwarding is working")

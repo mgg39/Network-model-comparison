@@ -12,11 +12,9 @@ from netsquid.protocols import NodeProtocol
 #import topology 
 from network import Two_node_network
 #import forwarding protocol 
-from protocol import Forward_message
-#import generating qubits initial protocol
-from initialize import Generate_message
+#from protocol import Forward_message
 #import data collection system
-from datacollector import Measure_Qubit
+#from datacollector import Measure_Qubit
 
 def run_experiment(num_qubits):
 
@@ -28,18 +26,16 @@ def run_experiment(num_qubits):
 
     ## Protocols ------------------------------------------
     for node in network.nodes:
+        '''
         f = Forward_message(network.nodes[node])
         protocols.append(f)
         measure_node_nums.append(f)
-
+        
         m = Measure_Qubit(network.nodes[node])
         protocols.append(m)
         measure_protocols.append(m)    
-    
-    g = Generate_message(network.nodes[node],num_qubits)
-    protocols.append(g) 
-    protocols.append(f)
-    
+        '''
+
 
     ## Data collector ------------------------------------------
     
@@ -84,6 +80,8 @@ def run_experiment(num_qubits):
     # We want to collect data for all protocols running concurrently, use "OR"
     dc.collect_on(events, combine_rule='OR')
     
+    print(dc)
+
     ## Simulation ------------------------------------------
     # Start the simulation
     ns.sim_run()
