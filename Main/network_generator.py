@@ -2,8 +2,6 @@ import networkx as nx
 
 import netsquid as ns
 import netsquid.components.instructions as instr #instructions that can be followed by the processor
-from netsquid.components import ClassicalChannel
-from netsquid.components import QuantumChannel
 from netsquid.nodes import Node, Network
 from processor import create_processor
 from connections import QuantumConnection, ClassicalConnection
@@ -53,3 +51,5 @@ def network(type,nodes,topology,node_distance): #,noise_model)
                                    connection=connection,
                                    port_name_node1=f'cla_%s' % j,
                                    port_name_node2=f'cla_%s' % i)
+
+    #follow networkx topology set up

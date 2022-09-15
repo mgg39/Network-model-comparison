@@ -43,4 +43,3 @@ class QuantumConnection(Connection):
 
         qsource.ports["qout0"].connect(qchannel_1.ports["send"])
         qsource.ports["qout1"].connect(qchannel_2.ports["send"])
-
