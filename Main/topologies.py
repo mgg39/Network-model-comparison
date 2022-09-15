@@ -351,7 +351,7 @@ class LineTopology_q(_Topology):
 #--------------------------------------Line Topology-------------------------------------------------------
 
 #Classical version
-class CycleTopology_c(LineTopology):
+class CycleTopology_c(LineTopology_c):
     def __init__(self, num_nodes=5):
         super().__init__()
         self.num_nodes = num_nodes
@@ -378,7 +378,7 @@ class CycleTopology_c(LineTopology):
 
 
 #Quantum version
-class CycleTopology_q(LineTopology):
+class CycleTopology_q(LineTopology_q):
     def __init__(self, num_nodes=5):
         super().__init__()
         self.num_nodes = num_nodes
