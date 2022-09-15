@@ -7,3 +7,4 @@ n_distance = 1
 
 network1 = network("quantum",n_nodes,t_topology,n_distance) #,noise_model)
 network2 = network("classic",n_nodes,t_topology,n_distance) #noise_model)
+
