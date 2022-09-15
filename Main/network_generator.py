@@ -5,6 +5,7 @@ import netsquid.components.instructions as instr #instructions that can be follo
 from netsquid.nodes import Node, Network
 from processor import processor
 from connections import QuantumConnection, ClassicalConnection
+from topologies import StarTopology_q,GridTopology_q,CycleTopology_q,LineTopology_q,StarTopology_c,GridTopology_c,CycleTopology_c,LineTopology_c
 
 #type : quantum, classic
 #nodes : n of desired nodes
@@ -12,24 +13,33 @@ from connections import QuantumConnection, ClassicalConnection
 #noise model : set to none for now
 def network(type,n_nodes,topology,node_distance): #,noise_model)
     available_types = ['quantum','classic']
-    available_topologies = ['star_graph','grid_2d_graph','cycle_graph']
+    available_topologies = ['star_graph','grid_2d_graph','cycle_graph','line_graph']
+    protocols = []
 
     #-------------------------set inputs-----------------------
     for ty in available_types:
         if type == 'quantum':
-            connection = QuantumConnection(length=node_distance, source_frequency=2e7)
+            for to in available_topologies:
+                if topology == 'star_graph':
+                    network = protocols.append(StarTopology_q(network.nodes[node]))
+                elif topology == 'grid_2d_graph':
+                    network = protocols.append(GridTopology_q(network.nodes[node]))
+                elif topology == 'cycle_graph':
+                    network = protocols.append(CycleTopology_q(network.nodes[node]))
+                elif topology == 'line_graph':
+                    network = protocols.append(LineTopology_q(network.nodes[node]))
         elif type == 'classic':
-            connection = ClassicalConnection(length=node_distance, source_frequency=2e7)
+            for to in available_topologies:
+                if topology == 'star_graph':
+                    network = protocols.append(StarTopology_c(network.nodes[node]))
+                elif topology == 'grid_2d_graph':
+                    network = protocols.append(GridTopology_c(network.nodes[node]))
+                elif topology == 'cycle_graph':
+                    network = protocols.append(CycleTopology_c(network.nodes[node]))
+                elif topology == 'line_graph':
+                    network = protocols.append(LineTopology_c(network.nodes[node]))
 
-    for to in available_topologies:
-        if topology == 'star_graph':
-            network = nx.star_graph(n_nodes)
-        elif topology == 'grid_2d_graph':
-            network = nx.grid_2d_graph(n_nodes)
-        elif topology == 'cycle_graph':
-            network = nx.cycle_graph(n_nodes)
-
-
+        
     #-------------------------generate netsquid network-----------------------
 
     #append nodes
