@@ -14,7 +14,7 @@ def network(type,nodes,topology,node_distance): #,noise_model)
     available_types = ['quantum','classic']
     available_topologies = ['star_graph','grid_2d_graph','cycle_graph']
 
-    #-------------------------generate networkx network-----------------------
+    #-------------------------set inputs-----------------------
     for ty in available_types:
         if type == 'quantum':
             connection = QuantumConnection(length=node_distance, source_frequency=2e7)
@@ -52,4 +52,5 @@ def network(type,nodes,topology,node_distance): #,noise_model)
                                    port_name_node1=f'cla_%s' % j,
                                    port_name_node2=f'cla_%s' % i)
 
-    #follow networkx topology set up
+    #-------------------------return network-----------------------
+    return network
