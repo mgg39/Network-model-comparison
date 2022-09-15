@@ -6,7 +6,7 @@ from netsquid.components import PhysicalInstruction, QuantumProcessor, DepolarNo
 
 #from netsquid.qubits import 
 
-def create_processor(depolar_rate, dephase_rate):
+def processor(depolar_rate, dephase_rate):
     measure_noise_model = DephaseNoiseModel(dephase_rate=dephase_rate,
                                             time_independent=True)
     physical_instructions = [ 

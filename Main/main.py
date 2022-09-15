@@ -14,6 +14,8 @@ from netsquid.protocols import NodeProtocol
 
 #import network generator
 from network_generator import network
+from protocols import Initiatesystem,Sendmessage,Sendentangledmessage, Readmessage
+from processor import processor
 
 np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
 
@@ -30,11 +32,15 @@ network2 = network('classic',n_nodes,t_topology,n_distance) #noise_model)
 def run_comparison_experiment(network):
 
     #Append protocols to nodes
+    protocols = []
     for node in network.nodes:
         #initiating communications protocols
-
-        #simple layer protocols
+        protocols.append(Initiatesystem(network.nodes[node]))
+        
         if network.type == 'quantum': #with entanglement
-            
+            protocols.append(Sendentangledmessage(network.nodes[node]))
         else: #classical vs
-            
+            protocols.append(Sendmessage(network.nodes[node]))
+        
+        #read message
+        protocols.append(Readmessage(network.nodes[node]))

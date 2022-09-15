@@ -12,6 +12,7 @@ from netsquid.protocols import Signals
 
 
 class Initiatesystem(NodeProtocol):
+
     def __init__(self, node, num_qubits=100):
         super().__init__(node)
         self.num_qubits = num_qubits
@@ -25,6 +26,7 @@ class Initiatesystem(NodeProtocol):
 
 
 class Sendmessage(NodeProtocol):
+
     def run(self):
         def forward(message):
 
@@ -75,10 +77,34 @@ class Sendmessage(NodeProtocol):
                 self.node.qmemory.pop(0)
 
 
+class Sendentangledmessage(NodeProtocol):
+
+    def run(self):
+    while True:
+        if self.start_expression is not None:
+            yield self.start_expression
+        elif self._is_source and self.entangled_pairs >= self._num_pairs:
+            # If no start expression specified then limit generation to one round
+            break
+        for mem_pos in self._mem_positions[::-1]:
+            # Iterate in reverse so that input_mem_pos is handled last
+            if self._is_source:
+                self.node.subcomponents[self._qsource_name].trigger()
+            yield self.await_port_input(self._qmem_input_port)
+            if mem_pos != self._input_mem_pos:
+                self.node.qmemory.execute_instruction(
+                    #this SWAP is present within our protocol through the Beam Splitter's
+                    #density matrix performed SWAP
+                    INSTR_SWAP, [self._input_mem_pos, mem_pos])
+                if self.node.qmemory.busy:
+                    yield self.await_program(self.node.qmemory)
+            self.entangled_pairs += 1
+            self.send_signal(Signals.SUCCESS, mem_pos)
+
+
 class Readmessage(NodeProtocol):
 
     def run(self):
-
         def measure(message):
 
             self.send_signal(Signals.SUCCESS, (self.node.number, 0))
