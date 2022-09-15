@@ -4,7 +4,7 @@ import netsquid.qubits.ketstates as ks
 from netsquid.components import ClassicalChannel 
 from netsquid.components import PhysicalInstruction, QuantumProcessor, DepolarNoiseModel, DephaseNoiseModel
 
-from netsquid.qubits import 
+#from netsquid.qubits import 
 
 def create_processor(depolar_rate, dephase_rate):
     measure_noise_model = DephaseNoiseModel(dephase_rate=dephase_rate,
