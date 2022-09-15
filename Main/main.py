@@ -21,12 +21,12 @@ np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
 
  #-------------------------generate netsquid network-----------------------
 #setting variables
-n_nodes = 10
-t_topology = 'line'
+nodes = 10
+t_topology = 'star_graph'
 n_distance = 1
 
-network1 = network('quantum',n_nodes,t_topology,n_distance) #,noise_model)
-network2 = network('classic',n_nodes,t_topology,n_distance) #noise_model)
+network1 = network('quantum',nodes,t_topology,n_distance) #,noise_model)
+network2 = network('classic',nodes,t_topology,n_distance) #noise_model)
 
  #-------------------------run the network-----------------------
 def run_comparison_experiment(network):
