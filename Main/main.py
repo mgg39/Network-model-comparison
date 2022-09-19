@@ -114,7 +114,7 @@ def networkexperiment(nodes,t_topology,n_distance):
         events.append(ns.pydynaa.EventExpression(source=p,
                                                  event_type=Signals.SUCCESS.value))
     #print("collecting outputs")
-    print("Events 2:",events)
+    #print("Events 2:",events)
     dc.collect_on(events, combine_rule='OR')
 
     #------------------------- run simulation -----------------------
