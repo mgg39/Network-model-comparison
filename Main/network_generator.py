@@ -59,7 +59,10 @@ def network(type,n_nodes,topology,node_distance):
         nodes.append(node)
     
     network.add_nodes(nodes)
+
+    print(network)
     
+    """  
     print("set up network")
     print("n_nodes:",n_nodes)
     for i in range(0,n_nodes):
@@ -68,7 +71,7 @@ def network(type,n_nodes,topology,node_distance):
         print("i:",i)
 
         while j <= n_nodes:
-
+    
             #print("started filling networks")
             if type == 'quantum':
                 print("creating a quantum network")
@@ -79,18 +82,18 @@ def network(type,n_nodes,topology,node_distance):
                                         source_frequency=source_frequency)
                 #adding connection to the network
                 network.add_connection(nodes[i],
-                                        nodes[j],
-                                        label=f'qonn_{i}{j}',
-                                        connection=q_conn,
-                                        port_name_node1=f'qla_%s' % j,
-                                        port_name_node2=f'qla_%s' % i)
-                """
+                                       nodes[j],
+                                       label=f'qonn_{i}{j}',
+                                       connection=q_conn,
+                                       port_name_node1=f'qla_%s' % j,
+                                       port_name_node2=f'qla_%s' % i)
+                
                 port_1, port_2 = network.add_connection(nodes[i], nodes[j], connection=q_conn, label=f"quan_%s%s" % (i, j),
                                                         port_name_node1=f"qin_ent_source_{i}{j}", port_name_node2=f"qin_ent_source_{i}{j}")
             
                 nodes[i].ports[port_1].forward_input(nodes[i].qmemory.ports[f'qin{j}'])
                 nodes[j].ports[port_2].forward_input(nodes[j].qmemory.ports[f'qin{i}'])
-                """
+                
                 j += 1
 
             else:
@@ -112,7 +115,10 @@ def network(type,n_nodes,topology,node_distance):
                 nodes[j].ports[port_2].forward_input(nodes[j].qmemory.ports[f'cin{i}'])
                 
                 j += 1
+        """                                    
 
-        network.type = type
-        #-------------------------return network-----------------------
-        return network
+        #network.type = type
+    
+    #-------------------------return network-----------------------
+    
+    return network

@@ -28,7 +28,7 @@ print(end - start)
 np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
 
 #setting variables
-nodes = 2
+nodes = 10
 topology = 'star_graph'
 distance = 1
 
