@@ -20,7 +20,7 @@ class Initiatesystem(NodeProtocol):
     def run(self):
         for _ in range(self.num_qubits):
             q = ns.qubits.create_qubits(1) 
-            self.send_signal(Signals.SUCCESS, 2) 
+            self.send_signal(Signals.SUCCESS, 0) 
             self.node.qmemory.put(q, 0, replace=True) 
             yield self.await_timer(100) 
 

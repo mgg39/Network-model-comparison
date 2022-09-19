@@ -12,10 +12,10 @@ from netsquid.qubits.qformalism import *
 from netsquid.util.datacollector import DataCollector
 
 #import network generator
-from network_generator import network
 from protocols import Initiatesystem,Sendmessage, Readmessage
 from netsquid.examples.entanglenodes import EntangleNodes
 from processor import processor
+from network_generator import network_generator
 
 import time
 start = time.time()
@@ -33,34 +33,29 @@ distance = 1
 
 def networkexperiment(nodes,t_topology,n_distance):
 
-    #print("network experiment main initiate")
+    print("network experiment main initiate")
 
-    network1 = network('quantum',nodes,t_topology,n_distance) #,noise_model)
-    #network2 = network('classic',nodes,t_topology,n_distance) #noise_model)
+    network = network_generator(nodes)
 
-    #print("set networks initiate")
-    #------------------------- run network 1 -----------------------
+    print("set networks initiate")
+    #------------------------- run network  -----------------------
 
     #Append protocols to nodes
     protocols = []
-    i = 0
-    for node in network1.nodes:
-        i = i+1
-        #initiating communications protocols
-        protocols.append(Initiatesystem(network1.nodes[node]))
-        
-        """
-        if network1.type == 'quantum': #with entanglement
-            if i <= nodes:
-                protocols.append(EntangleNodes(node = node,role = "source", name = "A"))
-                protocols.append(EntangleNodes(node = node+1,role = "receiver",name = "B"))
-        """
-        #print("sending message")
-        protocols.append(Sendmessage(network1.nodes[node]))
-        #print("message sent")
 
-        #read message
-        protocols.append(Readmessage(network1.nodes[node]))
+
+    for node in range(0,nodes):
+        #initiating communications protocols
+
+        if node < nodes :
+            print("sending message")
+            protocols.append(Sendmessage(network.nodes[node]))
+            print("message sent")
+        else:
+            print("read message")
+            protocols.append(Readmessage(network.nodes[node]))
+
+    protocols.append(Initiatesystem(network.nodes[node]))
 
     #------------------------- collect the data -----------------------
     #print("collect data initiate")
@@ -69,11 +64,13 @@ def networkexperiment(nodes,t_topology,n_distance):
     current_qubit = 0
 
     def collect_stats(evexpr):
+        nonlocal current_qubit
+
         print("Collecting Signals")
+
         trigger = evexpr.triggered_events[-1].source
-        print("Events 1: ", evexpr)
         print("Triggers: ",trigger)
-        print("Signals: ",trigger.get_signal_result(Signals.SUCCESS))
+
         data = trigger.get_signal_result(Signals.SUCCESS)
         print("data: ",data)
 
@@ -99,9 +96,7 @@ def networkexperiment(nodes,t_topology,n_distance):
 
     print("Open Data Collector")
 
-    #print(dc)
     dc = DataCollector(collect_stats)
-    print("Data Collector",dc)
 
     events = []
     for p in protocols:

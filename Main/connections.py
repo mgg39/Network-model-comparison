@@ -11,35 +11,55 @@ from netsquid.qubits import StateSampler
 
 class ClassicalConnection(Connection):
 
+    """A connection that transmits classical messages in one direction, from A to B.
+
+    Parameters
+    ----------
+    length : float
+        End to end length of the connection [km].
+    name : str, optional
+       Name of this connection.
+
+    """
+
     def __init__(self, length, name="ClassicalConnection"):
         super().__init__(name=name)
-        self.add_subcomponent(ClassicalChannel("Channel_A2B",
-                                               length=length, 
-                                               models={"delay_model": FibreDelayModel()}), 
+        self.add_subcomponent(ClassicalChannel("Channel_A2B", length=length,
+                                               models={"delay_model": FibreDelayModel()}),
                               forward_input=[("A", "send")],
-                              forward_output=[("B", "recv")]) 
+                              forward_output=[("B", "recv")])
 
 
 class QuantumConnection(Connection):
+    """A connection that generates entanglement.
 
-    def __init__(self, length, source_frequency, name="QuantumConnection"): 
+    Consists of a midpoint holding a quantum source that connects to
+    outgoing quantum channels.
+
+    Parameters
+    ----------
+    length : float
+        End to end length of the connection [km].
+    source_frequency : float
+        Frequency with which midpoint entanglement source generates entanglement [Hz].
+    name : str, optional
+        Name of this connection.
+
+    """
+
+    def __init__(self, length, source_frequency, name="EntanglingConnection"):
         super().__init__(name=name)
-        qsource = QSource(f"qsource_{name}",
-                          StateSampler([ks.b00], [1.0]),
-                          num_ports=2, 
-                          timing_model=FixedDelayModel(delay=1e9 / source_frequency), 
+        qsource = QSource(f"qsource_{name}", StateSampler([ks.b00], [1.0]), num_ports=2,
+                          timing_model=FixedDelayModel(delay=1e9 / source_frequency),
                           status=SourceStatus.INTERNAL)
-        self.add_subcomponent(qsource, 
-                              name=f"qsource_{name}")
-        qchannel_1 = QuantumChannel(f"qchannel_1_{name}",
-                                    length=length / 2,
-                                    models={"delay_model": FibreDelayModel()})
-        qchannel_2 = QuantumChannel(f"qchannel_2__{name}",
-                                    length=length / 2,
-                                    models={"delay_model": FibreDelayModel()})
-
-        self.add_subcomponent(qchannel_1, forward_output=[("A", "recv")])
-        self.add_subcomponent(qchannel_2, forward_output=[("B", "recv")])
-
-        qsource.ports["qout0"].connect(qchannel_1.ports["send"])
-        qsource.ports["qout1"].connect(qchannel_2.ports["send"])
+        self.add_subcomponent(qsource, name="qsource")
+        qchannel_c2a = QuantumChannel("qchannel_C2A", length=length / 2,
+                                      models={"delay_model": FibreDelayModel()})
+        qchannel_c2b = QuantumChannel("qchannel_C2B", length=length / 2,
+                                      models={"delay_model": FibreDelayModel()})
+        # Add channels and forward quantum channel output to external port output:
+        self.add_subcomponent(qchannel_c2a, forward_output=[("A", "recv")])
+        self.add_subcomponent(qchannel_c2b, forward_output=[("B", "recv")])
+        # Connect qsource output to quantum channel input:
+        qsource.ports["qout0"].connect(qchannel_c2a.ports["send"])
+        qsource.ports["qout1"].connect(qchannel_c2b.ports["send"])
