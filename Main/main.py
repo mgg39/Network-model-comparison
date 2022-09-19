@@ -9,8 +9,7 @@ from netsquid.protocols import Signals
 from netsquid.util import DataCollector
 from netsquid.qubits.qubitapi import *
 from netsquid.qubits.qformalism import *
-from netsquid.nodes import Node, Network 
-from netsquid.protocols import NodeProtocol
+from netsquid.util.datacollector import DataCollector
 
 #import network generator
 from network_generator import network
@@ -56,9 +55,10 @@ def networkexperiment(nodes,t_topology,n_distance):
                 protocols.append(EntangleNodes(node = node,role = "source", name = "A"))
                 protocols.append(EntangleNodes(node = node+1,role = "receiver",name = "B"))
         """
-
+        #print("sending message")
         protocols.append(Sendmessage(network1.nodes[node]))
-        
+        #print("message sent")
+
         #read message
         protocols.append(Readmessage(network1.nodes[node]))
 
@@ -86,16 +86,19 @@ def networkexperiment(nodes,t_topology,n_distance):
                 qubit_paths[current_qubit].append(data[0])
 
         elif data[1] == 0:
+            print("current qubit set0:",current_qubit)
+
             if data[0] in qubits_received_stats:
                 qubits_received_stats[data[0]] += 1
             else:
                 qubits_received_stats[data[0]] = 1
 
-    #print("open data collector")
+    print("open data collector")
     dc = DataCollector(collect_stats)
+
     events = []
     for p in protocols:
-        #print("protocol: ", p)
+        print("protocol: ", p)
         #print("initiating protocol messages")
         # Make sure the start the protocol
         p.start()
@@ -105,7 +108,6 @@ def networkexperiment(nodes,t_topology,n_distance):
                                                  event_type=Signals.SUCCESS.value))
     #print("collecting outputs")
     dc.collect_on(events, combine_rule='OR')
-
 
     #------------------------- show data -----------------------
     #print("create data file")

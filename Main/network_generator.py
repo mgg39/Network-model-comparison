@@ -60,8 +60,13 @@ def network(type,n_nodes,topology,node_distance):
     
     network.add_nodes(nodes)
 
+    """
+    #Testing
     print(network)
-    
+    print(network.nodes)
+    print(network.connections)
+    """
+
     """  
     print("set up network")
     print("n_nodes:",n_nodes)
