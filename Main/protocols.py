@@ -20,7 +20,7 @@ class Initiatesystem(NodeProtocol):
     def run(self):
         for _ in range(self.num_qubits):
             q = ns.qubits.create_qubits(1) 
-            self.send_signal(Signals.SUCCESS, (self.node.number, 2)) 
+            self.send_signal(Signals.SUCCESS, 0) 
             self.node.qmemory.put(q, 0, replace=True) 
             yield self.await_timer(100) 
 
@@ -30,7 +30,7 @@ class Sendmessage(NodeProtocol):
     def run(self):
         def forward(message):
 
-            self.send_signal(Signals.SUCCESS, (self.node.number, 1))
+            self.send_signal(Signals.SUCCESS, 1)
             qubit = message.items[0]
             operate(qubit, ops.H)
             
@@ -77,31 +77,6 @@ class Sendmessage(NodeProtocol):
                 self.node.qmemory.pop(0)
 
 
-class Sendentangledmessage(NodeProtocol):
-
-    def run(self):
-        while True:
-            if self.start_expression is not None:
-                yield self.start_expression
-            elif self._is_source and self.entangled_pairs >= self._num_pairs:
-                # If no start expression specified then limit generation to one round
-                break
-            for mem_pos in self._mem_positions[::-1]:
-                # Iterate in reverse so that input_mem_pos is handled last
-                if self._is_source:
-                    self.node.subcomponents[self._qsource_name].trigger()
-                yield self.await_port_input(self._qmem_input_port)
-                if mem_pos != self._input_mem_pos:
-                    self.node.qmemory.execute_instruction(
-                        #this SWAP is present within our protocol through the Beam Splitter's
-                        #density matrix performed SWAP
-                        INSTR_SWAP, [self._input_mem_pos, mem_pos])
-                    if self.node.qmemory.busy:
-                        yield self.await_program(self.node.qmemory)
-                self.entangled_pairs += 1
-                self.send_signal(Signals.SUCCESS, mem_pos)
-
-
 class Readmessage(NodeProtocol):
 
     def run(self):
@@ -116,7 +91,6 @@ class Readmessage(NodeProtocol):
             self.node.ports['qua_p2'].bind_input_handler(measure)
 
         while True:
-
             if 'qua_p' in self.node.ports:
                 yield self.await_port_input(self.node.ports['qua_p'])
             elif 'qua_p1' in self.node.ports and 'qua_p2' in self.node.ports:
@@ -124,5 +98,9 @@ class Readmessage(NodeProtocol):
                     self.node.ports['qua_p2'])
             elif 'qua_p1' in self.node.ports:
                 yield self.await_port_input(self.node.ports['qua_p1'])
-            else:
+            elif 'qua_p2' in self.node.ports:
                 yield self.await_port_input(self.node.ports['qua_p2'])
+            else:
+                yield self.await_port_input(self.node.qmemory.ports['qin'])
+                self.node.qmemory.pop(0)
+           

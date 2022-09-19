@@ -14,12 +14,13 @@ from netsquid.protocols import NodeProtocol
 
 #import network generator
 from network_generator import network
-from protocols import Initiatesystem,Sendmessage,Sendentangledmessage, Readmessage
+from protocols import Initiatesystem,Sendmessage, Readmessage
+from netsquid.examples.entanglenodes import EntangleNodes
 from processor import processor
 
 import time
 start = time.time()
-print("I am still running")
+print("I am running")
 end = time.time()
 print(end - start)
 
@@ -27,77 +28,94 @@ print(end - start)
 np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
 
 #setting variables
-nodes = 10
+nodes = 2
 topology = 'star_graph'
 distance = 1
 
 def networkexperiment(nodes,t_topology,n_distance):
 
+    #print("network experiment main initiate")
+
     network1 = network('quantum',nodes,t_topology,n_distance) #,noise_model)
-    network2 = network('classic',nodes,t_topology,n_distance) #noise_model)
+    #network2 = network('classic',nodes,t_topology,n_distance) #noise_model)
 
-    #------------------------- run the network -----------------------
-    def run_comparison_experiment(network):
+    #print("set networks initiate")
+    #------------------------- run network 1 -----------------------
 
-        #Append protocols to nodes
-        protocols = []
-        for node in network.nodes:
-            #initiating communications protocols
-            protocols.append(Initiatesystem(network.nodes[node]))
-            
-            if network.type == 'quantum': #with entanglement
-                protocols.append(Sendentangledmessage(network.nodes[node]))
-            else: #classical vs
-                protocols.append(Sendmessage(network.nodes[node]))
-            
-            #read message
-            protocols.append(Readmessage(network.nodes[node]))
+    #Append protocols to nodes
+    protocols = []
+    i = 0
+    for node in network1.nodes:
+        i+=1
+        #initiating communications protocols
+        protocols.append(Initiatesystem(network1.nodes[node]))
+        
+        """
+        if network1.type == 'quantum': #with entanglement
+            if i <= nodes:
+                protocols.append(EntangleNodes(node = node,role = "source", name = "A"))
+                protocols.append(EntangleNodes(node = node+1,role = "receiver",name = "B"))
+        """
 
-        #------------------------- collect the data -----------------------
-        qubits_received_stats = {}
-        qubit_paths = {}
-        current_qubit = 0
+        protocols.append(Sendmessage(network1.nodes[node]))
+        
+        #read message
+        protocols.append(Readmessage(network1.nodes[node]))
 
-        def collect_stats(evexpr):
-            trigger = evexpr.triggered_events[-1].source
+    #------------------------- collect the data -----------------------
+    #print("collect data initiate")
+    qubits_received_stats = {}
+    qubit_paths = {}
+    current_qubit = 0
 
-            data = trigger.get_signal_result(Signals.SUCCESS)
-            
-            if data[1] == 2:
-                current_qubit += 1
-            
-            elif data[1] == 1:
-                if current_qubit not in qubit_paths: 
-                    qubit_paths[current_qubit] = [data[0]]                
-                else:
-                    qubit_paths[current_qubit].append(data[0])
+    def collect_stats(evexpr):
+        print("collecting stats")
+        trigger = evexpr.triggered_events[-1].source
 
-            elif data[1] == 0:
-                if data[0] in qubits_received_stats:
-                    qubits_received_stats[data[0]] += 1
-                else:
-                    qubits_received_stats[data[0]] = 1
+        data = trigger.get_signal_result(Signals.SUCCESS)
+        
+        if data[1] == 2:
+            print("current qubit set2:",current_qubit)
+            current_qubit += 1
+        
+        elif data[1] == 1:
+            print("current qubit set1:",current_qubit)
+            if current_qubit not in qubit_paths: 
+                qubit_paths[current_qubit] = [data[0]]                
+            else:
+                qubit_paths[current_qubit].append(data[0])
+
+        elif data[1] == 0:
+            if data[0] in qubits_received_stats:
+                qubits_received_stats[data[0]] += 1
+            else:
+                qubits_received_stats[data[0]] = 1
+
+    #print("open data collector")
+    dc = DataCollector(collect_stats)
+    events = []
+    for p in protocols:
+        #print("protocol: ", p)
+        #print("initiating protocol messages")
+        # Make sure the start the protocol
+        p.start()
+        # Build up all the events to track
+        #print("working through protocols")
+        events.append(ns.pydynaa.EventExpression(source=p,
+                                                 event_type=Signals.SUCCESS.value))
+    #print("collecting outputs")
+    dc.collect_on(events, combine_rule='OR')
 
 
-        dc = DataCollector(collect_stats)
-        events = []
-        for p in protocols:
-            # Make sure the start the protocol
-            p.start()
-            # Build up all the events to track
-            events.append(ns.pydynaa.EventExpression(source=p,
-                                                        event_type=Signals.SUCCESS.value))
-
-        dc.collect_on(events, combine_rule='OR')
-
-
-        #------------------------- show data -----------------------
-        data = [qubit_paths[k] for k in sorted(qubit_paths.keys())]
-        with open('tpt3.txt', 'w') as f:
-            f.writelines(["%s \n " % item  for item in data])
+    #------------------------- show data -----------------------
+    #print("create data file")
+    data = [qubit_paths[k] for k in sorted(qubit_paths.keys())]
+    print("results: \n", data)
+    with open('tpt3.txt', 'w') as f:
+        f.writelines(["%s \n " % item  for item in data])
 
 
 #------------------------- RUN -------------------------
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(0,1):
         networkexperiment(nodes, topology, distance)
