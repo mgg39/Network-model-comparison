@@ -45,7 +45,7 @@ def networkexperiment(nodes,t_topology,n_distance):
     protocols = []
     i = 0
     for node in network1.nodes:
-        i+=1
+        i = i+1
         #initiating communications protocols
         protocols.append(Initiatesystem(network1.nodes[node]))
         
@@ -69,36 +69,43 @@ def networkexperiment(nodes,t_topology,n_distance):
     current_qubit = 0
 
     def collect_stats(evexpr):
-        print("collecting stats")
+        print("Collecting Signals")
         trigger = evexpr.triggered_events[-1].source
-
+        print("Events 1: ", evexpr)
+        print("Triggers: ",trigger)
+        print("Signals: ",trigger.get_signal_result(Signals.SUCCESS))
         data = trigger.get_signal_result(Signals.SUCCESS)
-        
+        print("data: ",data)
+
         if data[1] == 2:
-            print("current qubit set2:",current_qubit)
+            print("current qubit set 2:",current_qubit)
             current_qubit += 1
         
+
         elif data[1] == 1:
-            print("current qubit set1:",current_qubit)
+            print("current qubit set 1:",current_qubit)
             if current_qubit not in qubit_paths: 
                 qubit_paths[current_qubit] = [data[0]]                
             else:
                 qubit_paths[current_qubit].append(data[0])
-
+        
         elif data[1] == 0:
-            print("current qubit set0:",current_qubit)
+            print("current qubit set 0:",current_qubit)
 
             if data[0] in qubits_received_stats:
                 qubits_received_stats[data[0]] += 1
             else:
                 qubits_received_stats[data[0]] = 1
 
-    print("open data collector")
+    print("Open Data Collector")
+
+    #print(dc)
     dc = DataCollector(collect_stats)
+    print("Data Collector",dc)
 
     events = []
     for p in protocols:
-        print("protocol: ", p)
+        #print("protocol: ", p)
         #print("initiating protocol messages")
         # Make sure the start the protocol
         p.start()
@@ -107,7 +114,11 @@ def networkexperiment(nodes,t_topology,n_distance):
         events.append(ns.pydynaa.EventExpression(source=p,
                                                  event_type=Signals.SUCCESS.value))
     #print("collecting outputs")
+    print("Events 2:",events)
     dc.collect_on(events, combine_rule='OR')
+
+    #------------------------- run simulation -----------------------
+    ns.sim_run()
 
     #------------------------- show data -----------------------
     #print("create data file")
@@ -115,6 +126,7 @@ def networkexperiment(nodes,t_topology,n_distance):
     print("results: \n", data)
     with open('tpt3.txt', 'w') as f:
         f.writelines(["%s \n " % item  for item in data])
+
 
 
 #------------------------- RUN -------------------------
