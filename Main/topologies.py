@@ -9,7 +9,7 @@ from netsquid.components.qprocessor import QuantumProcessor
 
 from connections import HeraldedConnection
 
-def create_example_network(num_qubits=3):
+def create_example_network(num_qubits=10):
     """Create the example network.
 
     Alice and Bob need a QuantumProcessor to store the qubits they produce.
