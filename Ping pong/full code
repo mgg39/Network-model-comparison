@@ -52,12 +52,12 @@ class PingPongDelayModel(DelayModel):
         delay = 1e9 * kwargs['length'] / speed  # in nanoseconds
         return delay
 
-distance = 2.74 / 1000  # default unit of length in channels is km
+distance = 100 / 1000  # default unit of length in channels is km
 delay_model = PingPongDelayModel()
-channel_1 = ClassicalChannel(name="qchannel[ping to pong]",
+channel_1 = QuantumChannel(name="qchannel[ping to pong]",
                            length=distance,
                            models={"delay_model": delay_model})
-channel_2 = ClassicalChannel(name="qchannel[pong to ping]",
+channel_2 = QuantumChannel(name="qchannel[pong to ping]",
                            length=distance,
                            models={"delay_model": delay_model})
 
