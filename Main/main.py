@@ -38,6 +38,7 @@ def networkexperiment(nodes,t_topology,n_distance):
     network = network_generator(nodes)
 
     print("set networks initiate")
+
     #------------------------- run network  -----------------------
 
     #Append protocols to nodes
@@ -47,13 +48,16 @@ def networkexperiment(nodes,t_topology,n_distance):
     for node in range(0,nodes):
         #initiating communications protocols
 
-        if node < nodes :
+        if node != nodes-1 :
             print("sending message")
             protocols.append(Sendmessage(network.nodes[node]))
             print("message sent")
-        else:
+        end
+        
+        if node != 0:
             print("read message")
             protocols.append(Readmessage(network.nodes[node]))
+        end
 
     protocols.append(Initiatesystem(network.nodes[node]))
 
