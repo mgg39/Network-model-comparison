@@ -32,13 +32,13 @@
     \section{Experimental set up and topological generators}
 
     \subsection*{NetSquid, a discrete event simulator}
-    \paragraph{The experiment behind this study was run on Netsquid\cite{Netsquid}, a Network Simulator for Quantum information using Discrete events.
+    The experiment behind this study was run on Netsquid\cite{Netsquid}, a Network Simulator for Quantum information using Discrete events.
     Four topologies were tested in this study: a line topology, a 2D grid topology, a star topology, and a circle topology. 
     The comparison was made through a network generator which would output a quantum or classical network with the requested traits.
     A simple node to node message was sent through the various topologies, which were tested with different numbers of nodes. 
     For classical networks the protocol was a simple forwarding protocol, whereas for quantum networks the protocol leverage node to node entanglement.
     The results where then analyzed and compared.
-    }
+    
 
     \begin{figure}
     \centering
@@ -142,17 +142,21 @@
 
     \section{Conclusion}
     
-    \paragraph{
-    In these results we observe very similar results for both the Quantum and Classical Networks. If we purely base of comparison of topology alone the results seem consistent across both types of networks. 
+In these results we observe very similar results for both the Quantum and Classical Networks. If we purely base of comparison of topology alone the results seem consistent across both types of networks. 
     We have three possible explanations for these results:
+    
     - The lack of a specific tool designed to take into account the potential differences between these network's interactions with their mathematical topology.
+    
     - A lack of correlation between the network's nature and it's performance against equivalent topologies.
+    
     - A need to compare teleportation protocols for quantum networks against forwarding protocols in classical networks, given that these are the ideal simplest state of both networks.
+    
     Further testing and analysis will be required to make a solid conclusion.
     Similarly further studies on the effects of various noise models within these topologies would be an interesting prolongation of this study. We would then expect a considerable speed up for quantum networks, and would be able to analyze wherever the disparity between results is affected by the topological setting.
+    
     All relevant code is currently open source and available at \href{https://github.com/mgg39/Network-model-comparison}{Network model comparison}
     
-    }
+
 
     \bibliographystyle{plain}
     \bibliography{References_bib.bib}
